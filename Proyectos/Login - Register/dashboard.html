@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro Dashboard 1000 Marcas</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .search-box {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .search-box input {
+      width: 80%;
+      padding: 12px;
+      border: 2px solid #00ffff;
+      background: #000;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    /* Forzar 4 columnas por línea */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .search-box input { width: 95%; }
+    }
+
+    .card {
+      background: rgba(0,0,0,0.35);
+      padding: 16px;
+      border: 2px solid #ff00ff;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.22s;
+      box-shadow: 0 0 12px #ff00ff55;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+    }
+    .card img {
+      width: 100%;
+      height: 70px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+    .card p { margin: 0; font-size: 12px; font-family: 'Press Start 2P', cursive; color: #fff; }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 18px;
+      background: #00ffff;
+      color: #000;
+      border: 2px solid #00ffff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ffff;
+      transition: 0.2s;
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: #55ffff;
+      box-shadow: 0 0 16px #00ffff;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="window.location.href='index.html'">⟵ Volver</button>
+
+  <div class="container">
+    <h1 class="title">🕹 Selección Retro de Marcas — 1.000 Marcas 🕹</h1>
+    <p class="subtitle">Busca cualquier marca (ropa, coches, lujo, tecnología...)</p>
+
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Buscar marca..." oninput="filterBrands()">
+    </div>
+
+    <div id="brandGrid" class="grid"></div>
+  </div>
+
+<script>
+  // Lista inicial de marcas reales con logo (parte ejemplo).
+  const realBrands = [
+    { name: "Nike", img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", url: "https://www.nike.com" },
+    { name: "Adidas", img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg", url: "https://www.adidas.com" },
+    { name: "Puma", img: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Puma_Logo.svg", url: "https://www.puma.com" },
+    { name: "Zara", img: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Zara_Logo.svg", url: "https://www.zara.com" },
+    { name: "Gucci", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/Gucci_Logo.svg", url: "https://www.gucci.com" },
+    { name: "Louis Vuitton", img: "https://upload.wikimedia.org/wikipedia/commons/7/70/Louis_Vuitton_logo_and_wordmark.svg", url: "https://www.louisvuitton.com" },
+    { name: "Balenciaga", img: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Balenciaga_Logo.svg", url: "https://www.balenciaga.com" },
+    { name: "Supreme", img: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Supreme_Logo.svg", url: "https://www.supremenewyork.com" },
+
+    { name: "BMW", img: "https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg", url: "https://www.bmw.com" },
+    { name: "Mercedes-Benz", img: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Mercedes-Benz_Logo_2010.svg", url: "https://www.mercedes-benz.com" },
+    { name: "Audi", img: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Audi_logo_detail.svg", url: "https://www.audi.com" },
+    { name: "Lamborghini", img: "https://upload.wikimedia.org/wikipedia/en/5/5e/Lamborghini_Logo.svg", url: "https://www.lamborghini.com" },
+    { name: "Ferrari", img: "https://upload.wikimedia.org/wikipedia/en/3/3d/Ferrari-Logo.svg", url: "https://www.ferrari.com" },
+    { name: "Porsche", img: "https://upload.wikimedia.org/wikipedia/en/0/0d/Porsche_logo.svg", url: "https://www.porsche.com" },
+    { name: "Tesla", img: "https://upload.wikimedia.org/wikipedia/commons/b/bd/Tesla_Motors.svg", url: "https://www.tesla.com" },
+
+    { name: "Apple", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", url: "https://www.apple.com" },
+    { name: "Samsung", img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg", url: "https://www.samsung.com" },
+    { name: "Sony", img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Sony_Logo.svg", url: "https://www.sony.com" },
+    { name: "Dell", img: "https://upload.wikimedia.org/wikipedia/commons/4/48/Dell_Logo.svg", url: "https://www.dell.com" },
+    { name: "HP", img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/HP_logo_2012.svg", url: "https://www.hp.com" },
+    { name: "Lenovo", img: "https://upload.wikimedia.org/wikipedia/commons/4/48/Lenovo_logo.svg", url: "https://www.lenovo.com" },
+    { name: "Asus", img: "https://upload.wikimedia.org/wikipedia/commons/3/3e/ASUS_Logo.svg", url: "https://www.asus.com" },
+    { name: "Microsoft", img: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_(2012).svg", url: "https://www.microsoft.com" },
+
+    { name: "Apple Music", img: "https://upload.wikimedia.org/wikipedia/commons/1/11/Apple_Music_logo.svg", url: "https://www.apple.com/apple-music/" },
+    { name: "Spotify", img: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg", url: "https://www.spotify.com" },
+    { name: "Netflix", img: "https://upload.wikimedia.org/wikipedia/commons/6/69/Netflix_logo.svg", url: "https://www.netflix.com" },
+    { name: "H&M", img: "https://upload.wikimedia.org/wikipedia/commons/5/5b/H%26M-Logo.svg", url: "https://www2.hm.com" },
+    { name: "Uniqlo", img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Uniqlo_logo.svg", url: "https://www.uniqlo.com" },
+    { name: "Under Armour", img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Under_armour_logo.svg", url: "https://www.underarmour.com" },
+    { name: "The North Face", img: "https://upload.wikimedia.org/wikipedia/commons/6/60/The_North_Face_logo.svg", url: "https://www.thenorthface.com" },
+    { name: "Reebok", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Reebok_2019_logo.svg", url: "https://www.reebok.com" },
+
+    { name: "Nintendo", img: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Nintendo.svg", url: "https://www.nintendo.com" },
+    { name: "PlayStation", img: "https://upload.wikimedia.org/wikipedia/commons/4/44/PlayStation_logo.svg", url: "https://www.playstation.com" },
+    { name: "Xbox", img: "https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox_logo.svg", url: "https://www.xbox.com" },
+    { name: "EA", img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/EA_logo.svg", url: "https://www.ea.com" },
+    { name: "Ubisoft", img: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Ubisoft_logo_2017.svg", url: "https://www.ubisoft.com" },
+    { name: "Razer", img: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Razer_logo.svg", url: "https://www.razer.com" },
+
+    { name: "Ikea", img: "https://upload.wikimedia.org/wikipedia/commons/5/5b/IKEA_logo.svg", url: "https://www.ikea.com" },
+    { name: "Amazon", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "https://www.amazon.com" },
+    { name: "eBay", img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg", url: "https://www.ebay.com" },
+    { name: "Alibaba", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/Alibaba_Logo.svg", url: "https://www.alibaba.com" },
+
+    // Relleno hasta 1000: usamos placeholders con el nombre en la imagen para que todas tengan imagen
+    ...Array.from({length: 1000 - (/*realBrandsCount*/ 44)}).map((_, i) => ({
+      name: `Marca ${i+45}`,
+      img: `https://via.placeholder.com/300x100?text=Marca+${i+45}`,
+      url: "https://example.com"
+    }))
+  ];
+
+  // Combinar lista final
+  const brands = [...realBrands, ...realBrands.slice(realBrands.length) , ...Array.from({length: 1000 - realBrands.length}).map((_, i) => ({
+    name: `Marca ${i+realBrands.length+1}`,
+    img: `https://via.placeholder.com/300x100?text=Marca+${i+realBrands.length+1}`,
+    url: "https://example.com"
+  }))];
+
+  const grid = document.getElementById('brandGrid');
+
+  function renderBrands(list) {
+    grid.innerHTML = list.map(b => `
+      <a href="${b.url}" target="_blank" class="card">
+        <img src="${b.img}" alt="${b.name} logo">
+        <p>${b.name}</p>
+      </a>`
+    ).join('');
+  }
+
+  function filterBrands() {
+    const q = document.getElementById('search').value.toLowerCase();
+    const filtered = brands.filter(b => b.name.toLowerCase().includes(q));
+    renderBrands(filtered);
+  }
+
+  // Render inicial
+  renderBrands(brands);
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+header {
+    
+    /* m10 */
+    margin: 10px;
+
+    /* m10p */
+    margin: 10%;
+
+    /* m10e */
+    margin: 10em;
+
+    /* m10-10 */
+    margin: 10px 10px;
+
+    /* w10 */
+    width: 10px;
+
+    /* c#f00 */
+    color: #f00;
+
+    /* bgc#321 */
+    background-color: #321;
+
+}

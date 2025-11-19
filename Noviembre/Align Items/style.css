@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+div, body {
+    box-sizing: border-box;
+}
+
+.flexbox {
+    display: flex;
+    flex-flow: row wrap;
+    border: 2px solid #000;
+    margin: 20px;
+    justify-content: space-evenly;
+    align-items: start;
+}
+
+
+
+.flex-item {
+    margin: 10px;
+    color: #000;
+    font-size: 40px;
+    text-align: center;
+    width: 100px;
+     border: 2px solid #000;
+}
+
+.flex-item:first-child {
+    background-color: #f77;
+    height: 100px;
+    font-size: 60px;
+}
+
+.flex-item:last-child {
+    background-color: #000;
+    font-size: 80px;
+}

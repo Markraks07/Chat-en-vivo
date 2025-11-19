@@ -1,0 +1,21 @@
+div {
+  width: 300px;
+  height: 200px;
+  background: linear-gradient(red, blue); /* intento de gradiente */
+  margin: auto 10px;
+  padding: 0px;
+  font: Arial;
+  box-shadow: 2px 2px black;
+}
+
+p {
+  color: #ff0;
+  font-size: 18;
+  transition: color 0.3s ease;
+}
+
+/* Margin: Sirve para poner margenes, del elemento respecto a otros    
+   elementos.
+   Padding: Sirve para determinar el espacio del elemento entre su contenido.
+   Box-shadow: Sirve para hacer dgradados.
+   Transition: Sirve para hacer transiciones de color, tamaño... */

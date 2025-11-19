@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"> <!-- ✅ Corrige error: antes no estaba definida la codificación -->
+    <meta name="description" content="Formulario de prueba"> <!-- ✅ 'descripcion' no era válido, debe ser 'name="description"' con 'content' -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ Buena práctica para que sea responsive -->
+    <title>Formulario</title>
+</head>
+<body>
+    <form>
+        <!-- El label vincula el texto con el input gracias al atributo 'for' -->
+        <label for="nombre">Nombre:</label> 
+        <input type="text" id="nombre" name="nombre"> <!-- ✅ Se añadió 'id' para poder vincular con el label -->
+
+        <br>
+
+        <!-- El select crea una lista desplegable -->
+        <label for="opciones">Elige una opción:</label>
+        <select id="opciones" name="opciones">
+            <!-- El option define los elementos del select. Es obligatorio cerrarlos correctamente -->
+            <option value="1">Opción 1</option> 
+            <option value="2">Opción 2</option>
+        </select>
+
+        <br>
+
+        <!-- El textarea crea un área de texto para escribir más contenido -->
+        <label for="comentarios">Comentarios:</label>
+        <textarea id="comentarios" name="comentarios" placeholder="Escribe aquí"></textarea>
+
+        <!-- ⚠️ Importante: cerrar bien las etiquetas evita errores de interpretación en el navegador -->
+    </form>
+</body>
+</html>
+
+<!-- 
+📌 Explicaciones:
+- <label> vincula un texto con un input gracias al atributo 'for' (accesibilidad y usabilidad).
+- <textarea> crea un área de texto de varias líneas para escribir contenido.
+- <option> define los ítems dentro de un <select>. Se deben cerrar siempre para evitar errores.
+- Cerrar etiquetas correctamente asegura que el navegador interprete el HTML de forma estándar.
+- HTML correcto (ej: <meta name="description">, <option></option>) se debe usar en lugar de HTML obsoleto o mal escrito (ej: <meta descripcion>, <option> sin cierre).
+-->
