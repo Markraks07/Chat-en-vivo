@@ -1,8 +1,7 @@
 /* ----------------- General ----------------- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('https://images.unsplash.com/photo-1509228627150-29f57d21b60c?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-    background-size: cover;
+    font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+    background: url('https://i.imgur.com/7v0TZbF.png') repeat; /* Patrón estilo WhatsApp */
     margin: 0;
     padding: 0;
     color: #333;
@@ -12,18 +11,20 @@ body {
 #auth-container, #choice-container {
     max-width: 400px;
     margin: 100px auto;
-    background: rgba(255,255,255,0.95);
+    background: rgba(0,0,0,0.85);
     padding: 30px 40px;
     border-radius: 15px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    color: #fff;
 }
 
 #auth-container h2, #choice-container h2 {
     margin-bottom: 25px;
-    color: #128C7E;
+    color: #00ffcc;
     font-size: 1.8em;
     letter-spacing: 1px;
+    text-shadow: 0 0 5px #00ffcc;
 }
 
 /* Inputs */
@@ -32,15 +33,17 @@ body {
     padding: 12px 15px;
     margin-bottom: 15px;
     border-radius: 25px;
-    border: 1px solid #ccc;
+    border: 1px solid #00ffcc;
     outline: none;
     font-size: 1em;
     transition: all 0.2s ease;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
 }
 
 #auth-container input:focus {
-    border-color: #128C7E;
-    box-shadow: 0 0 5px #128C7E;
+    border-color: #00ffcc;
+    box-shadow: 0 0 5px #00ffcc;
 }
 
 /* Botones */
@@ -48,20 +51,20 @@ button {
     padding: 12px 25px;
     border: none;
     border-radius: 25px;
-    background: #128C7E;
-    color: white;
+    background: #00ffcc;
+    color: black;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
 
 button:hover {
-    background: #075E54;
+    background: #00e6b8;
 }
 
 /* Enlaces */
 a {
-    color: #128C7E;
+    color: #00ffcc;
     text-decoration: none;
 }
 
@@ -74,24 +77,25 @@ a:hover {
     max-width: 700px;
     height: 80vh;
     margin: 50px auto;
-    background: rgba(255,255,255,0.95);
+    background: rgba(0,0,0,0.8);
     padding: 15px 20px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    border: 1px solid #ddd;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    border: 1px solid #00ffcc;
 }
 
 /* Chat title */
 #chat-container::before {
-    content: "Chat en vivo";
+    content: "Chat Retro";
     font-weight: bold;
     font-size: 1.5em;
-    color: #128C7E;
+    color: #00ffcc;
     text-align: center;
     margin-bottom: 10px;
     display: block;
+    text-shadow: 0 0 5px #00ffcc;
 }
 
 /* Lista de mensajes */
@@ -114,23 +118,28 @@ li {
     display: flex;
     flex-direction: column;
     font-size: 0.95em;
+    position: relative;
 }
 
 /* Mensajes enviados (yo) */
 li.sent {
-    background: #dcf8c6;
+    background: linear-gradient(135deg, #00ffcc, #00e6b8);
     align-self: flex-end;
     text-align: right;
     margin-left: 35%;
+    color: black;
+    box-shadow: 0 2px 5px rgba(0,255,204,0.5);
 }
 
 /* Mensajes recibidos (otros) */
 li.received {
-    background: #fff;
-    border: 1px solid #ccc;
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    border: 1px solid #fff200;
     align-self: flex-start;
     text-align: left;
     margin-right: 35%;
+    color: black;
+    box-shadow: 0 2px 5px rgba(255,204,0,0.5);
 }
 
 /* Username y hora */
@@ -139,14 +148,32 @@ li .username {
     margin-bottom: 3px;
     display: block;
     font-size: 0.85em;
+    color: #00ffcc;
 }
 
 li .time {
     font-size: 0.7em;
-    color: gray;
+    color: #eee;
     display: block;
     text-align: right;
     margin-top: 3px;
+}
+
+/* Botón borrar */
+li button {
+    background: transparent;
+    border: none;
+    color: #ff3333;
+    cursor: pointer;
+    font-size: 0.9em;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: none;
+}
+
+li:hover button {
+    display: block;
 }
 
 /* Formulario chat */
@@ -154,26 +181,36 @@ form {
     display: flex;
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #00ffcc;
 }
 
 input#input {
     flex: 1;
     padding: 12px 15px;
     border-radius: 25px;
-    border: 1px solid #ccc;
+    border: 1px solid #00ffcc;
     outline: none;
     font-size: 1em;
     transition: all 0.2s;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
 }
 
 input#input:focus {
-    border-color: #128C7E;
-    box-shadow: 0 0 5px #128C7E;
+    border-color: #00ffcc;
+    box-shadow: 0 0 5px #00ffcc;
 }
 
 form button {
     margin-left: 10px;
+    background: #00ffcc;
+    color: black;
+    font-weight: bold;
+    border-radius: 25px;
+}
+
+form button:hover {
+    background: #00e6b8;
 }
 
 /* Scrollbar */
@@ -182,11 +219,11 @@ ul::-webkit-scrollbar {
 }
 
 ul::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: rgba(255,255,255,0.1);
     border-radius: 10px;
 }
 
 ul::-webkit-scrollbar-thumb {
-    background: #128C7E;
+    background: #00ffcc;
     border-radius: 10px;
 }
