@@ -1,9 +1,188 @@
-body { font-family: Arial, sans-serif; background: #e5ddd5; }
-#chat-container { max-width: 600px; margin: 50px auto; background: #fff; padding: 10px; border-radius: 10px; }
-ul { list-style-type: none; padding: 0; max-height: 400px; overflow-y: scroll; }
-li { padding: 5px 10px; margin: 5px 0; border-radius: 10px; max-width: 80%; }
-li.sent { background: #dcf8c6; margin-left: auto; }
-li.received { background: #fff; margin-right: auto; border: 1px solid #ccc; }
-form { display: flex; }
-input { flex: 1; padding: 10px; border-radius: 20px; border: 1px solid #ccc; }
-button { padding: 10px; border: none; background: #128C7E; color: white; border-radius: 20px; margin-left: 5px; cursor: pointer; }
+/* ----------------- General ----------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://images.unsplash.com/photo-1601597111531-6f6f5b7e5a6b?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* ----------------- Contenedores de Auth ----------------- */
+#auth-container, #choice-container {
+    max-width: 400px;
+    margin: 100px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 30px 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+#auth-container h2, #choice-container h2 {
+    margin-bottom: 25px;
+    color: #128C7E;
+    font-size: 1.8em;
+    letter-spacing: 1px;
+}
+
+/* Inputs */
+#auth-container input {
+    width: 85%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.2s ease;
+}
+
+#auth-container input:focus {
+    border-color: #128C7E;
+    box-shadow: 0 0 5px #128C7E;
+}
+
+/* Botones */
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: #128C7E;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #075E54;
+}
+
+/* Enlaces */
+a {
+    color: #128C7E;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ----------------- Chat ----------------- */
+#chat-container {
+    max-width: 700px;
+    height: 80vh;
+    margin: 50px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 15px 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border: 1px solid #ddd;
+}
+
+/* Chat title */
+#chat-container::before {
+    content: "Chat en vivo";
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #128C7E;
+    text-align: center;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Lista de mensajes */
+ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* Mensajes */
+li {
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: inline-block;
+    position: relative;
+    font-size: 0.95em;
+}
+
+/* Mensajes enviados */
+li.sent {
+    background: #dcf8c6;
+    align-self: flex-end;
+}
+
+/* Mensajes recibidos */
+li.received {
+    background: #fff;
+    border: 1px solid #ccc;
+    align-self: flex-start;
+}
+
+/* Username y hora */
+li .username {
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: block;
+    font-size: 0.85em;
+}
+
+li .time {
+    font-size: 0.7em;
+    color: gray;
+    display: block;
+    text-align: right;
+    margin-top: 3px;
+}
+
+/* Formulario chat */
+form {
+    display: flex;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+}
+
+input#input {
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.2s;
+}
+
+input#input:focus {
+    border-color: #128C7E;
+    box-shadow: 0 0 5px #128C7E;
+}
+
+form button {
+    margin-left: 10px;
+}
+
+/* Scrollbar */
+ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background: #128C7E;
+    border-radius: 10px;
+}
