@@ -36,7 +36,7 @@ loginBtn.addEventListener('click', () => {
           if(data.success){
               // Guardamos el usuario en sessionStorage para usarlo en chat
               sessionStorage.setItem('username', username);
-              window.location.href = 'chat.html';
+              window.location.href = 'index.html';
           } else {
               authMsg.textContent = data.msg;
           }
@@ -46,3 +46,4 @@ loginBtn.addEventListener('click', () => {
 
 </body>
 </html>
+
