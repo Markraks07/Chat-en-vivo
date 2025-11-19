@@ -1,11 +1,12 @@
 /* ----------------- General ----------------- */
 body {
     font-family: 'Verdana', Geneva, Tahoma, sans-serif;
-    background: url('https://i.imgur.com/7v0TZbF.png') repeat; /* Patrón estilo WhatsApp */
+    background: url('https://i.ibb.co/T0mptHt/whatsapp-bg.png') repeat; /* Patrón estilo WhatsApp */
     margin: 0;
     padding: 0;
     color: #333;
 }
+
 
 /* ----------------- Contenedores de Auth ----------------- */
 #auth-container, #choice-container {
