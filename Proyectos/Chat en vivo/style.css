@@ -190,3 +190,61 @@ ul::-webkit-scrollbar-thumb {
     background: #128C7E;
     border-radius: 10px;
 }
+
+/* ----------------- Estilos para móviles ----------------- */
+@media (max-width: 600px) {
+    #auth-container, #choice-container {
+        margin: 50px 15px;
+        padding: 20px;
+    }
+
+    #auth-container input {
+        width: 95%;
+        padding: 10px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    #chat-container {
+        width: 95%;
+        height: 90vh;
+        margin: 20px auto;
+        padding: 10px 15px;
+    }
+
+    ul {
+        padding: 5px;
+    }
+
+    li {
+        font-size: 0.85em;
+        padding: 8px 12px;
+        max-width: 80%;
+    }
+
+    li.sent {
+        margin-left: auto;
+    }
+
+    li.received {
+        margin-right: auto;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    input#input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    form button {
+        width: 100%;
+        margin-left: 0;
+    }
+}
