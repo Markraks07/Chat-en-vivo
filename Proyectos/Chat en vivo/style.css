@@ -1,4 +1,3 @@
-/* ===== FONDO GENERAL ===== */
 body {
     font-family: 'Verdana', Geneva, Tahoma, sans-serif;
     background: url('https://i.ibb.co/T0mptHt/whatsapp-bg.png') repeat;
@@ -11,7 +10,6 @@ body {
     height: 100vh;
 }
 
-/* ===== CONTENEDOR CENTRADO ===== */
 .chat-wrapper {
     width: 90%;
     max-width: 900px;
@@ -25,7 +23,6 @@ body {
     border: 2px solid #0f0;
 }
 
-/* ===== CABECERA ===== */
 header {
     background-color: #131313;
     color: #0f0;
@@ -38,7 +35,6 @@ header {
     border-bottom: 2px solid #0f0;
 }
 
-/* ===== LISTA DE MENSAJES ===== */
 #messages {
     flex: 1;
     overflow-y: auto;
@@ -48,7 +44,6 @@ header {
     gap: 12px;
 }
 
-/* ===== BURBUJA GENÉRICA ===== */
 .message {
     max-width: 70%;
     padding: 10px 14px;
@@ -58,17 +53,14 @@ header {
     box-shadow: 0 0 8px rgba(0,0,0,0.4);
 }
 
-/* ===== NOMBRE DEL USUARIO ===== */
 .message .username {
     font-weight: bold;
     margin-bottom: 3px;
     display: block;
     font-size: 14px;
     color: #000;
-    text-shadow: 0 0 2px #fff;
 }
 
-/* ===== HORA ===== */
 .message .time {
     font-size: 11px;
     color: #333;
@@ -76,7 +68,6 @@ header {
     text-align: right;
 }
 
-/* ===== MENSAJES DE OTROS ===== */
 .message.other {
     background: rgba(0, 153, 255, 0.90);
     color: #fff;
@@ -86,10 +77,8 @@ header {
 
 .message.other .username {
     color: #fff;
-    text-shadow: 0 0 3px #000;
 }
 
-/* ===== MENSAJES PROPIOS ===== */
 .message.mine {
     background: rgba(0, 255, 140, 0.90);
     color: #000;
@@ -97,7 +86,6 @@ header {
     border-top-right-radius: 0;
 }
 
-/* ===== INPUT / CONTROLES ===== */
 .input-area {
     display: flex;
     padding: 12px;
@@ -130,7 +118,6 @@ button:hover {
     background: #5f5;
 }
 
-/* ===== BOTÓN ADMIN ===== */
 .delete-btn {
     font-size: 12px;
     background: red;
@@ -139,4 +126,30 @@ button:hover {
     margin-top: 6px;
     color: white;
     cursor: pointer;
+}
+
+.auth-body {
+    background: #000;
+}
+
+.auth-box {
+    background: rgba(20, 20, 20, 0.92);
+    border: 2px solid #0f0;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px #0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 350px;
+    text-align: center;
+}
+
+.auth-box input {
+    width: 100%;
+}
+
+.auth-box a {
+    color: #0f0;
+    text-decoration: none;
 }
