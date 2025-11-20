@@ -23,7 +23,7 @@ function login() {
 
     if (users[u] && users[u].pass === p) {
         localStorage.setItem("loggedUser", u);
-        window.location.href = "chat.html";
+        window.location.href = "index.html";
     } else {
         alert("Usuario o contraseña incorrectos.");
     }
@@ -31,3 +31,4 @@ function login() {
 </script>
 </body>
 </html>
+
