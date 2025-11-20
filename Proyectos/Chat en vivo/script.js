@@ -1,121 +1,42 @@
 const socket = io();
 
-const choiceContainer = document.getElementById('choice-container');
-const authContainer = document.getElementById('auth-container');
-const chatContainer = document.getElementById('chat-container');
-const usernameInput = document.getElementById('username-input');
-const passwordInput = document.getElementById('password-input');
-const authTitle = document.getElementById('auth-title');
-const authBtn = document.getElementById('auth-btn');
-const authMsg = document.getElementById('auth-msg');
-
-const form = document.getElementById('form');
 const input = document.getElementById('input');
+const sendBtn = document.getElementById('sendBtn');
 const messages = document.getElementById('messages');
+const sendSound = document.getElementById('sendSound');
+const receiveSound = document.getElementById('receiveSound');
 
-let username = '';
-let action = ''; // 'register' o 'login'
+let username = localStorage.getItem('loggedUser');
+let isAdmin = localStorage.getItem('isAdmin') === 'true';
 
-// Función para obtener hora
+// Función hora
 function getCurrentTime() {
     const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    if (hours < 10) hours = '0' + hours;
-    if (minutes < 10) minutes = '0' + minutes;
-    return `${hours}:${minutes}`;
+    let h = now.getHours();
+    let m = now.getMinutes();
+    if (h < 10) h = '0'+h;
+    if (m < 10) m = '0'+m;
+    return `${h}:${m}`;
 }
 
-// Mostrar formulario de registro
-document.getElementById('show-register').addEventListener('click', () => {
-    choiceContainer.style.display = 'none';
-    authContainer.style.display = 'block';
-    authTitle.textContent = 'Registrarse';
-    authBtn.textContent = 'Registrar';
-    action = 'register';
-    authMsg.textContent = '';
-    usernameInput.value = '';
-    passwordInput.value = '';
-});
-
-// Mostrar formulario de login
-document.getElementById('show-login').addEventListener('click', () => {
-    choiceContainer.style.display = 'none';
-    authContainer.style.display = 'block';
-    authTitle.textContent = 'Iniciar sesión';
-    authBtn.textContent = 'Iniciar sesión';
-    action = 'login';
-    authMsg.textContent = '';
-    usernameInput.value = '';
-    passwordInput.value = '';
-});
-
-// Click en botón registrar/iniciar
-authBtn.addEventListener('click', () => {
-    const user = usernameInput.value.trim();
-    const pass = passwordInput.value.trim();
-    if (!user || !pass) return;
-
-    const url = action === 'register' ? '/register' : '/login';
-
-    fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, password: pass })
-    }).then(res => res.json())
-      .then(data => {
-          if (data.success) {
-              if (action === 'register') {
-                  // Después de registrarse, mostrar mensaje y cambiar a login
-                  authMsg.style.color = 'green';
-                  authMsg.textContent = 'Registrado correctamente. Ahora inicia sesión.';
-                  authTitle.textContent = 'Iniciar sesión';
-                  authBtn.textContent = 'Iniciar sesión';
-                  action = 'login';
-                  usernameInput.value = '';
-                  passwordInput.value = '';
-              } else {
-                  username = user;
-                  authContainer.style.display = 'none';
-                  chatContainer.style.display = 'flex';
-              }
-          } else {
-              authMsg.style.color = 'red';
-              authMsg.textContent = data.msg;
-          }
-      });
-});
-
-// BOTÓN Y ENTER PARA ENVIAR SIN RECARGAR LA PÁGINA
-const sendBtn = document.getElementById('sendBtn');
-
-// Enviar con botón
-sendBtn.addEventListener('click', () => {
-    sendMessage();
-});
-
-// Enviar con Enter
-input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault(); // evita recargar
-        sendMessage();
-    }
-});
-
-// Función enviar mensaje
+// Enviar mensaje
 function sendMessage() {
-    if (input.value && username) {
-        const msgObj = { user: username, text: input.value, time: getCurrentTime() };
-        socket.emit('chat message', msgObj);
-        input.value = '';
-    }
+    if (!input.value || !username) return;
+    const msgObj = { user: username, text: input.value, time: getCurrentTime() };
+    socket.emit('chat message', msgObj);
+    input.value = '';
+    sendSound.play();
 }
 
+sendBtn.addEventListener('click', sendMessage);
+input.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); sendMessage(); } });
 
-// Recibir mensaje
-socket.on('chat message', function(msgObj) {
+// Mostrar mensaje
+function displayMessage(msgObj, index) {
     const item = document.createElement('li');
-    
+    item.classList.add('message');
+    item.classList.add(msgObj.user === username ? 'mine' : 'other');
+
     const userSpan = document.createElement('span');
     userSpan.classList.add('username');
     userSpan.textContent = msgObj.user;
@@ -131,12 +52,25 @@ socket.on('chat message', function(msgObj) {
     item.appendChild(textSpan);
     item.appendChild(timeSpan);
 
-    if (msgObj.user === username) {
-        item.classList.add('sent');
-    } else {
-        item.classList.add('received');
+    if (isAdmin) {
+        const delBtn = document.createElement('div');
+        delBtn.classList.add('delete-btn');
+        delBtn.textContent = 'Borrar';
+        delBtn.addEventListener('click', () => {
+            socket.emit('delete message', index);
+        });
+        item.appendChild(delBtn);
     }
 
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
+
+    if(msgObj.user !== username) receiveSound.play();
+}
+
+// Recibir mensajes
+socket.on('chat message', msg => displayMessage(msg, messages.children.length));
+socket.on('chat history', msgs => {
+    messages.innerHTML = '';
+    msgs.forEach((m,i) => displayMessage(m,i));
 });
