@@ -9,10 +9,9 @@ app.use(bodyParser.json());
 
 let users = {}; // Usuarios {username: password}
 let messages = []; // Mensajes históricos
-const ADMIN = 'admin'; // Usuario admin
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/login.html');
+    res.sendFile(__dirname + '/login.html'); // Inicio en login
 });
 
 // Registro
@@ -29,7 +28,7 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     if (users[username] && users[username] === password) {
-        res.json({ success: true, admin: username === ADMIN });
+        res.json({ success: true });
     } else {
         res.json({ success: false, msg: 'Usuario o contraseña incorrectos' });
     }
@@ -39,19 +38,13 @@ app.post('/login', (req, res) => {
 io.on('connection', socket => {
     console.log('Usuario conectado');
 
-    // Enviar historial
+    // Enviar historial al nuevo usuario
     socket.emit('chat history', messages);
 
-    // Recibir mensaje
+    // Recibir mensajes nuevos
     socket.on('chat message', msg => {
-        messages.push(msg);
-        io.emit('chat message', msg);
-    });
-
-    // Borrar mensaje (solo admin)
-    socket.on('delete message', index => {
-        messages.splice(index, 1);
-        io.emit('chat history', messages);
+        messages.push(msg); // Guardar mensaje
+        io.emit('chat message', msg); // Emitir a todos
     });
 
     socket.on('disconnect', () => console.log('Usuario desconectado'));
