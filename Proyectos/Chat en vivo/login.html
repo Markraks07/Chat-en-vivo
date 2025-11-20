@@ -1,49 +1,33 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Login</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-
-<div id="auth-container">
-    <h2>Iniciar sesión</h2>
-    <input id="username" placeholder="Nombre de usuario">
-    <input id="password" type="password" placeholder="Contraseña">
-    <button id="login-btn">Iniciar sesión</button>
-    <p id="auth-msg" style="color:red;"></p>
-    <p>¿No tienes cuenta? <a href="register.html">Registrarse</a></p>
-</div>
+<body class="auth-body">
+    <div class="auth-box">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="loginUser" placeholder="Nombre" />
+        <input type="password" id="loginPass" placeholder="Contraseña" />
+        <button onclick="login()">Entrar</button>
+        <a href="register.html">Crear cuenta</a>
+    </div>
 
 <script>
-const loginBtn = document.getElementById('login-btn');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
-const authMsg = document.getElementById('auth-msg');
+function login() {
+    const u = document.getElementById("loginUser").value;
+    const p = document.getElementById("loginPass").value;
 
-loginBtn.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-    if(!username || !password) return;
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
 
-    fetch('/login', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({username,password})
-    }).then(res => res.json())
-      .then(data => {
-          if(data.success){
-              // Guardamos el usuario en sessionStorage para usarlo en chat
-              sessionStorage.setItem('username', username);
-              window.location.href = 'index.html';
-          } else {
-              authMsg.textContent = data.msg;
-          }
-      });
-});
+    if (users[u] && users[u].pass === p) {
+        localStorage.setItem("loggedUser", u);
+        window.location.href = "chat.html";
+    } else {
+        alert("Usuario o contraseña incorrectos.");
+    }
+}
 </script>
-
 </body>
 </html>
-
