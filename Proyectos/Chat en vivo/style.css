@@ -1,6 +1,6 @@
 body {
     font-family: 'Verdana', Geneva, Tahoma, sans-serif;
-    background: url('https://www.aesdes.org/wp-content/uploads/2020/01/bradley-plester-retroscene-1000x563.jpg');
+    background: url('https://www.aesdes.org/wp-content/uploads/2020/01/bradley-plester-retroscene-1000x563.jpg') no-repeat center center fixed;
     background-size: 500px;
     margin: 0;
     padding: 0;
