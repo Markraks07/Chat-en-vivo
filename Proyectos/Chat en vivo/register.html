@@ -10,27 +10,30 @@
         <h2>Crear Cuenta</h2>
         <input type="text" id="regUser" placeholder="Nombre" />
         <input type="password" id="regPass" placeholder="Contraseña" />
-        <button onclick="register()">Registrar</button>
+        <button id="regBtn">Registrar</button>
         <a href="login.html">Iniciar sesión</a>
     </div>
 
 <script>
-function register() {
+document.getElementById('regBtn').addEventListener('click', () => {
     const u = document.getElementById("regUser").value;
     const p = document.getElementById("regPass").value;
-
     if (!u || !p) return alert("Completa todos los campos");
 
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-
-    if (users[u]) return alert("Ese usuario ya existe");
-
-    users[u] = { pass: p };
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Cuenta creada. Ahora inicia sesión.");
-    window.location.href = "login.html";
-}
+    fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+    }).then(res => res.json())
+      .then(data => {
+          if (data.success) {
+              alert("Cuenta creada. Ahora inicia sesión.");
+              window.location.href = 'login.html';
+          } else {
+              alert(data.msg);
+          }
+      });
+});
 </script>
 </body>
 </html>
