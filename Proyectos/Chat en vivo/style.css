@@ -1,7 +1,7 @@
 /* ----------------- General ----------------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('https://images.unsplash.com/photo-1601597111531-6f6f5b7e5a6b?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background: url('https://images.unsplash.com/photo-1509228627150-29f57d21b60c?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
     padding: 0;
@@ -109,24 +109,28 @@ li {
     padding: 10px 15px;
     margin: 8px 0;
     border-radius: 20px;
-    max-width: 70%;
+    max-width: 65%;
     word-wrap: break-word;
-    display: inline-block;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     font-size: 0.95em;
 }
 
-/* Mensajes enviados */
+/* Mensajes enviados (yo) */
 li.sent {
     background: #dcf8c6;
     align-self: flex-end;
+    text-align: right;
+    margin-left: 35%;
 }
 
-/* Mensajes recibidos */
+/* Mensajes recibidos (otros) */
 li.received {
     background: #fff;
     border: 1px solid #ccc;
     align-self: flex-start;
+    text-align: left;
+    margin-right: 35%;
 }
 
 /* Username y hora */
