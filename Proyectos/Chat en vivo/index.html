@@ -1,26 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>RetroChat</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Chat</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="chat-wrapper">
-        <header>RetroChat</header>
 
-        <ul id="messages"></ul>
+<div id="chat-container">
+    <ul id="messages"></ul>
+    <form id="form">
+        <input id="input" autocomplete="off" placeholder="Escribe un mensaje..."/>
+        <button>Enviar</button>
+    </form>
+</div>
 
-        <div class="input-area">
-            <input id="input" autocomplete="off" placeholder="Escribe un mensaje..." />
-            <button id="sendBtn">Enviar</button>
-        </div>
-    </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io();
 
-    <audio id="sendSound" src="https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3"></audio>
-    <audio id="receiveSound" src="https://assets.mixkit.co/sfx/preview/mixkit-long-pop-2358.mp3"></audio>
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const messages = document.getElementById('messages');
 
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <script src="script.js"></script>
+let username = sessionStorage.getItem('username');
+if(!username){
+    alert('No has iniciado sesión');
+    window.location.href = 'login.html';
+}
+
+// Hora actual
+function getCurrentTime(){
+    const now = new Date();
+    return now.getHours().toString().padStart(2,'0') + ':' +
+           now.getMinutes().toString().padStart(2,'0');
+}
+
+// Mostrar mensaje en pantalla
+function displayMessage(msg){
+    const item = document.createElement('li');
+
+    const userSpan = document.createElement('span');
+    userSpan.className='username';
+    userSpan.textContent = msg.user;
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = msg.text;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className='time';
+    timeSpan.textContent = msg.time;
+
+    item.appendChild(userSpan);
+    item.appendChild(textSpan);
+    item.appendChild(timeSpan);
+
+    item.className = msg.user === username ? 'sent' : 'received';
+    messages.appendChild(item);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+// Recibir historial
+socket.on('chat history', msgs => {
+    msgs.forEach(msg => displayMessage(msg));
+});
+
+// Recibir mensaje nuevo
+socket.on('chat message', msg => displayMessage(msg));
+
+// Enviar mensaje
+form.addEventListener('submit', e=>{
+    e.preventDefault();
+    if(!input.value || !username) return;
+    const msg = {user: username, text: input.value, time: getCurrentTime()};
+    socket.emit('chat message', msg);
+    input.value='';
+});
+</script>
+
 </body>
 </html>
