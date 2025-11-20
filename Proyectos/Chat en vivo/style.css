@@ -1,230 +1,85 @@
-/* ----------------- General ----------------- */
+/* ===== FONDO GENERAL ===== */
 body {
     font-family: 'Verdana', Geneva, Tahoma, sans-serif;
-    background: url('https://i.ibb.co/T0mptHt/whatsapp-bg.png') repeat; /* Patrón estilo WhatsApp */
+    background: url('https://i.ibb.co/T0mptHt/whatsapp-bg.png') repeat;
     margin: 0;
     padding: 0;
-    color: #333;
 }
 
-
-/* ----------------- Contenedores de Auth ----------------- */
-#auth-container, #choice-container {
-    max-width: 400px;
-    margin: 100px auto;
-    background: rgba(0,0,0,0.85);
-    padding: 30px 40px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    color: #fff;
-}
-
-#auth-container h2, #choice-container h2 {
-    margin-bottom: 25px;
-    color: #00ffcc;
-    font-size: 1.8em;
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px #00ffcc;
-}
-
-/* Inputs */
-#auth-container input {
-    width: 85%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    border-radius: 25px;
-    border: 1px solid #00ffcc;
-    outline: none;
-    font-size: 1em;
-    transition: all 0.2s ease;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-}
-
-#auth-container input:focus {
-    border-color: #00ffcc;
-    box-shadow: 0 0 5px #00ffcc;
-}
-
-/* Botones */
-button {
-    padding: 12px 25px;
-    border: none;
-    border-radius: 25px;
-    background: #00ffcc;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #00e6b8;
-}
-
-/* Enlaces */
-a {
-    color: #00ffcc;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* ----------------- Chat ----------------- */
-#chat-container {
-    max-width: 700px;
-    height: 80vh;
-    margin: 50px auto;
-    background: rgba(0,0,0,0.8);
-    padding: 15px 20px;
-    border-radius: 20px;
+/* ===== CONTENEDOR DEL CHAT ===== */
+.chat-container {
+    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-    border: 1px solid #00ffcc;
+    backdrop-filter: blur(2px);
 }
 
-/* Chat title */
-#chat-container::before {
-    content: "Chat Retro";
-    font-weight: bold;
-    font-size: 1.5em;
-    color: #00ffcc;
+/* ===== CABECERA ===== */
+header {
+    background-color: #1a1a1a;
+    color: #0f0;
     text-align: center;
-    margin-bottom: 10px;
-    display: block;
-    text-shadow: 0 0 5px #00ffcc;
+    padding: 12px;
+    font-size: 22px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 0 0 6px #0f0;
+    border-bottom: 2px solid #0f0;
 }
 
-/* Lista de mensajes */
-ul {
-    list-style: none;
-    padding: 10px;
-    margin: 0;
+/* ===== LISTA DE MENSAJES ===== */
+#messages {
     flex: 1;
     overflow-y: auto;
-    scroll-behavior: smooth;
-}
-
-/* Mensajes */
-li {
-    padding: 10px 15px;
-    margin: 8px 0;
-    border-radius: 20px;
-    max-width: 65%;
-    word-wrap: break-word;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    font-size: 0.95em;
+    gap: 12px;
+}
+
+/* ===== MENSAJE GENÉRICO ===== */
+.message {
+    max-width: 65%;
+    padding: 10px 14px;
+    border-radius: 10px;
     position: relative;
+    background: rgba(255, 255, 255, 0.8);
 }
 
-/* Mensajes enviados (yo) */
-li.sent {
-    background: linear-gradient(135deg, #00ffcc, #00e6b8);
-    align-self: flex-end;
-    text-align: right;
-    margin-left: 35%;
-    color: black;
-    box-shadow: 0 2px 5px rgba(0,255,204,0.5);
-}
-
-/* Mensajes recibidos (otros) */
-li.received {
-    background: linear-gradient(135deg, #ffcc00, #ff9900);
-    border: 1px solid #fff200;
-    align-self: flex-start;
-    text-align: left;
-    margin-right: 35%;
-    color: black;
-    box-shadow: 0 2px 5px rgba(255,204,0,0.5);
-}
-
-/* Username y hora */
-li .username {
+/* ===== NOMBRE DEL USUARIO ===== */
+.message .username {
     font-weight: bold;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
     display: block;
-    font-size: 0.85em;
-    color: #00ffcc;
+    font-size: 13px;
+    color: #000;         /* nombre SIEMPRE visible */
+    text-shadow: 0 0 2px #fff;
 }
 
-li .time {
-    font-size: 0.7em;
-    color: #eee;
-    display: block;
+/* ===== HORA ===== */
+.message .time {
+    font-size: 11px;
+    color: #444;
+    margin-top: 4px;
     text-align: right;
-    margin-top: 3px;
 }
 
-/* Botón borrar */
-li button {
-    background: transparent;
-    border: none;
-    color: #ff3333;
-    cursor: pointer;
-    font-size: 0.9em;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: none;
-}
-
-li:hover button {
-    display: block;
-}
-
-/* Formulario chat */
-form {
-    display: flex;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #00ffcc;
-}
-
-input#input {
-    flex: 1;
-    padding: 12px 15px;
-    border-radius: 25px;
-    border: 1px solid #00ffcc;
-    outline: none;
-    font-size: 1em;
-    transition: all 0.2s;
-    background: rgba(255,255,255,0.1);
+/* ===== MENSAJES DEL OTRO ===== */
+.message.other {
+    background: rgba(0, 153, 255, 0.85);
     color: #fff;
+    align-self: flex-start;
+    border-top-left-radius: 0;
 }
 
-input#input:focus {
-    border-color: #00ffcc;
-    box-shadow: 0 0 5px #00ffcc;
+.message.other .username {
+    color: #fff;
+    text-shadow: 0 0 3px #000;
 }
 
-form button {
-    margin-left: 10px;
-    background: #00ffcc;
-    color: black;
-    font-weight: bold;
-    border-radius: 25px;
-}
-
-form button:hover {
-    background: #00e6b8;
-}
-
-/* Scrollbar */
-ul::-webkit-scrollbar {
-    width: 8px;
-}
-
-ul::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
-
-ul::-webkit-scrollbar-thumb {
-    background: #00ffcc;
-    border-radius: 10px;
-}
+/* ===== MIS MENSAJES ===== */
+.message.mine {
+    background: rgba(0, 255, 140, 0.85);
+    color: #000;
+    align-se
