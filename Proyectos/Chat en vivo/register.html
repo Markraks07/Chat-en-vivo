@@ -1,47 +1,36 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Registrar</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <title>Registro</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-
-<div id="auth-container">
-    <h2>Registrarse</h2>
-    <input id="username" placeholder="Nombre de usuario">
-    <input id="password" type="password" placeholder="Contraseña">
-    <button id="register-btn">Registrar</button>
-    <p id="auth-msg" style="color:red;"></p>
-    <p>¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
-</div>
+<body class="auth-body">
+    <div class="auth-box">
+        <h2>Crear Cuenta</h2>
+        <input type="text" id="regUser" placeholder="Nombre" />
+        <input type="password" id="regPass" placeholder="Contraseña" />
+        <button onclick="register()">Registrar</button>
+        <a href="login.html">Iniciar sesión</a>
+    </div>
 
 <script>
-const registerBtn = document.getElementById('register-btn');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
-const authMsg = document.getElementById('auth-msg');
+function register() {
+    const u = document.getElementById("regUser").value;
+    const p = document.getElementById("regPass").value;
 
-registerBtn.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value.trim();
-    if(!username || !password) return;
+    if (!u || !p) return alert("Completa todos los campos");
 
-    fetch('/register', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({username,password})
-    }).then(res => res.json())
-      .then(data => {
-          if(data.success){
-              alert('Registrado con éxito. Ahora inicia sesión.');
-              window.location.href = 'login.html';
-          } else {
-              authMsg.textContent = data.msg;
-          }
-      });
-});
+    const users = JSON.parse(localStorage.getItem("users") || "{}");
+
+    if (users[u]) return alert("Ese usuario ya existe");
+
+    users[u] = { pass: p };
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Cuenta creada. Ahora inicia sesión.");
+    window.location.href = "login.html";
+}
 </script>
-
 </body>
 </html>
