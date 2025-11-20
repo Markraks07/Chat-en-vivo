@@ -1,39 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <title>Registro</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Registrar</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="auth-body">
-    <div class="auth-box">
-        <h2>Crear Cuenta</h2>
-        <input type="text" id="regUser" placeholder="Nombre" />
-        <input type="password" id="regPass" placeholder="Contraseña" />
-        <button id="regBtn">Registrar</button>
-        <a href="login.html">Iniciar sesión</a>
-    </div>
+<body>
+
+<div id="auth-container">
+    <h2>Registrarse</h2>
+    <input id="username" placeholder="Nombre de usuario">
+    <input id="password" type="password" placeholder="Contraseña">
+    <button id="register-btn">Registrar</button>
+    <p id="auth-msg" style="color:red;"></p>
+    <p>¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a></p>
+</div>
 
 <script>
-document.getElementById('regBtn').addEventListener('click', () => {
-    const u = document.getElementById("regUser").value;
-    const p = document.getElementById("regPass").value;
-    if (!u || !p) return alert("Completa todos los campos");
+const registerBtn = document.getElementById('register-btn');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const authMsg = document.getElementById('auth-msg');
+
+registerBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+    if(!username || !password) return;
 
     fetch('/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: u, password: p })
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({username,password})
     }).then(res => res.json())
       .then(data => {
-          if (data.success) {
-              alert("Cuenta creada. Ahora inicia sesión.");
+          if(data.success){
+              alert('Registrado con éxito. Ahora inicia sesión.');
               window.location.href = 'login.html';
           } else {
-              alert(data.msg);
+              authMsg.textContent = data.msg;
           }
       });
 });
 </script>
+
 </body>
 </html>
