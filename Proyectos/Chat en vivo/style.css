@@ -1,155 +1,188 @@
+/* ----------------- General ----------------- */
 body {
-    font-family: 'Verdana', Geneva, Tahoma, sans-serif;
-    background: url('https://www.aesdes.org/wp-content/uploads/2020/01/bradley-plester-retroscene-1000x563.jpg') center;
-    background-size: 500px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://images.unsplash.com/photo-1601597111531-6f6f5b7e5a6b?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.chat-wrapper {
-    width: 90%;
-    max-width: 900px;
-    height: 90vh;
-    background: rgba(20, 20, 20, 0.92);
-    border-radius: 14px;
-    box-shadow: 0 0 20px #0f0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border: 2px solid #0f0;
-}
-
-header {
-    background-color: #131313;
-    color: #0f0;
-    text-align: center;
-    padding: 15px;
-    font-size: 22px;
-    letter-spacing: 3px;
-    font-weight: bold;
-    text-shadow: 0 0 6px #0f0;
-    border-bottom: 2px solid #0f0;
-}
-
-#messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.message {
-    max-width: 70%;
-    padding: 10px 14px;
-    border-radius: 12px;
-    position: relative;
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 0 8px rgba(0,0,0,0.4);
-}
-
-.message .username {
-    font-weight: bold;
-    margin-bottom: 3px;
-    display: block;
-    font-size: 14px;
-    color: #000;
-}
-
-.message .time {
-    font-size: 11px;
     color: #333;
-    margin-top: 5px;
-    text-align: right;
 }
 
-.message.other {
-    background: rgba(0, 153, 255, 0.90);
-    color: #fff;
-    align-self: flex-start;
-    border-top-left-radius: 0;
+/* ----------------- Contenedores de Auth ----------------- */
+#auth-container, #choice-container {
+    max-width: 400px;
+    margin: 100px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 30px 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-.message.other .username {
-    color: #fff;
+#auth-container h2, #choice-container h2 {
+    margin-bottom: 25px;
+    color: #128C7E;
+    font-size: 1.8em;
+    letter-spacing: 1px;
 }
 
-.message.mine {
-    background: rgba(0, 255, 140, 0.90);
-    color: #000;
-    align-self: flex-end;
-    border-top-right-radius: 0;
-}
-
-.input-area {
-    display: flex;
-    padding: 12px;
-    background: #101010;
-    border-top: 2px solid #0f0;
-}
-
-input {
-    flex: 1;
-    padding: 12px;
-    border-radius: 10px;
-    border: 2px solid #0f0;
-    background: #000;
-    color: #0f0;
+/* Inputs */
+#auth-container input {
+    width: 85%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
     outline: none;
+    font-size: 1em;
+    transition: all 0.2s ease;
 }
 
+#auth-container input:focus {
+    border-color: #128C7E;
+    box-shadow: 0 0 5px #128C7E;
+}
+
+/* Botones */
 button {
-    padding: 12px 20px;
-    margin-left: 10px;
-    border-radius: 10px;
-    background: #0f0;
+    padding: 12px 25px;
     border: none;
+    border-radius: 25px;
+    background: #128C7E;
+    color: white;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 0 8px #0f0;
+    transition: 0.3s;
 }
 
 button:hover {
-    background: #5f5;
+    background: #075E54;
 }
 
-.delete-btn {
-    font-size: 12px;
-    background: red;
-    padding: 4px 6px;
-    border-radius: 6px;
-    margin-top: 6px;
-    color: white;
-    cursor: pointer;
+/* Enlaces */
+a {
+    color: #128C7E;
+    text-decoration: none;
 }
 
-.auth-body {
-    background: #000;
+a:hover {
+    text-decoration: underline;
 }
 
-.auth-box {
-    background: rgba(20, 20, 20, 0.92);
-    border: 2px solid #0f0;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 12px #0f0;
+/* ----------------- Chat ----------------- */
+#chat-container {
+    max-width: 700px;
+    height: 80vh;
+    margin: 50px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 15px 20px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 350px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border: 1px solid #ddd;
+}
+
+/* Chat title */
+#chat-container::before {
+    content: "Chat en vivo";
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #128C7E;
     text-align: center;
+    margin-bottom: 10px;
+    display: block;
 }
 
-.auth-box input {
-    width: 100%;
+/* Lista de mensajes */
+ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    flex: 1;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
-.auth-box a {
-    color: #0f0;
-    text-decoration: none;
+/* Mensajes */
+li {
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: inline-block;
+    position: relative;
+    font-size: 0.95em;
+}
+
+/* Mensajes enviados */
+li.sent {
+    background: #dcf8c6;
+    align-self: flex-end;
+}
+
+/* Mensajes recibidos */
+li.received {
+    background: #fff;
+    border: 1px solid #ccc;
+    align-self: flex-start;
+}
+
+/* Username y hora */
+li .username {
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: block;
+    font-size: 0.85em;
+}
+
+li .time {
+    font-size: 0.7em;
+    color: gray;
+    display: block;
+    text-align: right;
+    margin-top: 3px;
+}
+
+/* Formulario chat */
+form {
+    display: flex;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+}
+
+input#input {
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 1em;
+    transition: all 0.2s;
+}
+
+input#input:focus {
+    border-color: #128C7E;
+    box-shadow: 0 0 5px #128C7E;
+}
+
+form button {
+    margin-left: 10px;
+}
+
+/* Scrollbar */
+ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+ul::-webkit-scrollbar-thumb {
+    background: #128C7E;
+    border-radius: 10px;
 }
