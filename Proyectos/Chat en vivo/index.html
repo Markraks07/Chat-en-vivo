@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>RetroChat</title>
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-<div class="chat-wrapper">
-    <header>RetroChat</header>
+    <div class="chat-wrapper">
+        <header>RetroChat</header>
 
-    <ul id="messages"></ul>
+        <ul id="messages"></ul>
 
-    <form id="form" class="input-area">
-        <input id="input" autocomplete="off" placeholder="Escribe un mensaje..." />
-        <button>Enviar</button>
-    </form>
-</div>
+        <div class="input-area">
+            <input id="input" autocomplete="off" placeholder="Escribe un mensaje..." />
+            <button id="sendBtn">Enviar</button>
+        </div>
+    </div>
 
-<audio id="sendSound" src="https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3"></audio>
-<audio id="receiveSound" src="https://assets.mixkit.co/sfx/preview/mixkit-long-pop-2358.mp3"></audio>
+    <audio id="sendSound" src="https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3"></audio>
+    <audio id="receiveSound" src="https://assets.mixkit.co/sfx/preview/mixkit-long-pop-2358.mp3"></audio>
 
-
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
