@@ -10,25 +10,31 @@
         <h2>Iniciar Sesión</h2>
         <input type="text" id="loginUser" placeholder="Nombre" />
         <input type="password" id="loginPass" placeholder="Contraseña" />
-        <button onclick="login()">Entrar</button>
+        <button id="loginBtn">Entrar</button>
         <a href="register.html">Crear cuenta</a>
     </div>
 
 <script>
-function login() {
+document.getElementById('loginBtn').addEventListener('click', () => {
     const u = document.getElementById("loginUser").value;
     const p = document.getElementById("loginPass").value;
+    if (!u || !p) return alert("Completa todos los campos");
 
-    const users = JSON.parse(localStorage.getItem("users") || "{}");
-
-    if (users[u] && users[u].pass === p) {
-        localStorage.setItem("loggedUser", u);
-        window.location.href = "index.html";
-    } else {
-        alert("Usuario o contraseña incorrectos.");
-    }
-}
+    fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+    }).then(res => res.json())
+      .then(data => {
+          if (data.success) {
+              localStorage.setItem('loggedUser', u);
+              localStorage.setItem('isAdmin', data.admin);
+              window.location.href = 'index.html';
+          } else {
+              alert(data.msg);
+          }
+      });
+});
 </script>
 </body>
 </html>
-
