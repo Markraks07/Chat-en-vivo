@@ -15,6 +15,18 @@
     </form>
 </div>
 
+<div class="chat-wrapper">
+    <header>RetroChat</header>
+
+    <div id="messages"></div>
+
+    <div class="input-area">
+        <input id="msg" autocomplete="off" placeholder="Escribe un mensaje...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+</div>
+
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const socket = io();
